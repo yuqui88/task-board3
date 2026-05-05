@@ -10,11 +10,13 @@
 
 ## 技術スタック
 
-| 技術 | バージョン |
-|---|---|
-| React | 18.x |
-| Vite | 5.x |
-| CSS Modules | — |
+| 技術 | バージョン | 用途 |
+|---|---|---|
+| React | 18.x | UI コンポーネント・状態管理（`useState` / `useEffect`）|
+| Vite | 5.x | 開発サーバー・本番ビルド |
+| CSS Modules | — | コンポーネントスコープのスタイリング |
+| localStorage | — | タスクデータの永続化 |
+| GitHub Actions | — | CI/CD（自動ビルド・デプロイ）|
 
 ## 起動方法
 
@@ -37,7 +39,7 @@ npm run preview
 ```
 .
 ├── index.html              # エントリポイント HTML
-├── vite.config.js          # Vite 設定（base: '/task-board/'）
+├── vite.config.js          # Vite 設定（base: '/task-board3/'）
 ├── src/
 │   ├── main.jsx            # React マウント処理
 │   ├── App.jsx             # アプリ本体（状態管理・UI）
@@ -60,12 +62,44 @@ npm run preview
 
 ## デプロイ
 
+### デプロイ先 URL
+
+**https://yuqui88.github.io/task-board3/**
+
+### 仕組み
+
 `main` ブランチに push すると GitHub Actions が自動で以下を実行する。
 
 1. `npm ci` → `npm run build`
 2. `dist/` を GitHub Pages に配置
 
-`vite.config.js` の `base: '/task-board/'` はこの公開パスに対応している。
+`vite.config.js` の `base: '/task-board3/'` はこの公開パスに対応している。
+
+## 命名規約
+
+### コンポーネント
+
+| 対象 | 規約 | 例 |
+|---|---|---|
+| コンポーネントファイル | PascalCase + `.jsx` | `App.jsx`, `TaskItem.jsx` |
+| コンポーネント関数 | PascalCase | `export default function App()` |
+| CSS Modules ファイル | コンポーネント名 + `.module.css` | `App.module.css` |
+
+### CSS クラス（CSS Modules）
+
+| 対象 | 規約 | 例 |
+|---|---|---|
+| クラス名 | camelCase | `.inputRow`, `.addButton`, `.deleteButton` |
+| 状態クラス | 状態を表す単語 | `.done`, `.active` |
+
+### 変数・関数
+
+| 対象 | 規約 | 例 |
+|---|---|---|
+| 変数・状態 | camelCase | `tasks`, `input`, `nextId` |
+| イベントハンドラ | `handle` + 動詞/イベント名 | `handleKeyDown` |
+| 操作関数 | 動詞 + 対象 | `addTask`, `toggleTask`, `deleteTask` |
+| 定数（モジュールスコープ） | UPPER_SNAKE_CASE | `STORAGE_KEY` |
 
 ## Git 運用ルール
 
